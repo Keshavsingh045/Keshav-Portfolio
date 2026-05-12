@@ -33,9 +33,15 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Please provide all required fields' });
     }
 
-    // 1. Save to MongoDB
-    const newContact = new Contact({ name, email, message });
-    await newContact.save();
+    // 1. Save to MongoDB (Optional)
+    try {
+      if (mongoose.connection.readyState === 1) {
+        const newContact = new Contact({ name, email, message });
+        await newContact.save();
+      }
+    } catch (dbErr) {
+      console.log("Could not save to DB, but will continue to send email.");
+    }
 
     // 2. Send Email Notification
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {

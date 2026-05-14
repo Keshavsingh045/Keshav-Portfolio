@@ -57,6 +57,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Chat AI Error:', error);
-    return res.status(500).json({ error: 'Failed to fetch AI response' });
+    return res.status(500).json({ error: 'Failed to fetch AI response', details: error.message });
   }
 }

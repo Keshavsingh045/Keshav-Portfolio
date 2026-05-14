@@ -15,6 +15,7 @@ import {
 
 import Background3D from './components/Background3D';
 import TiltCard from './components/TiltCard';
+import Chatbot from './components/Chatbot';
 
 const SectionHeading = ({ title, icon: Icon }) => (
   <motion.div 
@@ -622,6 +623,7 @@ function App() {
           © {new Date().getFullYear()} Keshav Kundan. All Rights Reserved.
         </p>
       </footer>
+      <Chatbot />
     </div>
   );
 }

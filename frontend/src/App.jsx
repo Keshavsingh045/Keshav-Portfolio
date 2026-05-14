@@ -41,7 +41,7 @@ function App() {
     e.preventDefault();
     setFormStatus('sending');
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact';
+      const apiUrl = '/api/contact';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

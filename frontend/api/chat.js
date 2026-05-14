@@ -1,62 +1,53 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const resumeContext = `
-You are an AI Assistant for Keshav Kundan, a MERN Stack Developer. 
-Your job is to answer questions from recruiters about Keshav's skills, experience, and projects.
-Be professional, concise, and enthusiastic. Only answer questions related to Keshav's professional background.
-If asked something irrelevant, politely decline and steer the conversation back to Keshav's skills.
-
-Here is Keshav's data:
-Name: Keshav Kundan
-Title: Full Stack Developer | React, Node.js & Data Analysis
-Location: Samastipur, Bihar
-Email: keshavkskr400@gmail.com
-Phone: +91 8092289667
-Skills: C/C++, JavaScript, React, Node.js, Express, MongoDB, Tailwind CSS, Bootstrap.
-Experience: Web Developer Intern at InternPe (Feb 2024 - Mar 2024) - Built 3 live MERN projects.
-Projects:
-1. AI Exam System: Automates exam paper generation using AI.
-2. Skill Assessment Platform: Platform for evaluating technical skills.
-3. Certificate Validation API: Backend service for validating certificates.
-`;
+const resumeContext = {
+  skills: "Keshav is highly skilled in the MERN stack. His core technologies include C/C++, JavaScript, React, Node.js, Express, MongoDB, Tailwind CSS, and Bootstrap. He also has strong problem-solving abilities.",
+  experience: "Keshav worked as a Web Developer Intern at InternPe (Feb 2024 - Mar 2024), where he built 3 live MERN stack projects.",
+  projects: "Keshav has built several advanced projects, including: \n1. AI Exam System (Automates exam papers)\n2. Skill Assessment Platform\n3. Certificate Validation API.",
+  contact: "You can reach Keshav at keshavkskr400@gmail.com or call him at +91 8092289667. You can also use the contact form on this website!",
+  education: "Keshav is a dedicated software engineer with a strong academic background and multiple certifications in web development.",
+  default: "I'm a virtual assistant trained on Keshav's resume! I can tell you about his skills, experience, projects, or how to contact him. What would you like to know?"
+};
 
 export default async function handler(req, res) {
   // CORS setup
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'X-CSRF-Token, X-Requested-With, Accept, Content-Type'
   );
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
   try {
     const { message } = req.body;
+    if (!message) return res.status(200).json({ reply: resumeContext.default });
 
-    if (!process.env.GEMINI_API_KEY) {
-      return res.status(500).json({ error: 'AI API Key is missing.' });
+    const msg = message.toLowerCase();
+    let reply = resumeContext.default;
+
+    if (msg.includes('skill') || msg.includes('react') || msg.includes('node') || msg.includes('tech')) {
+      reply = resumeContext.skills;
+    } else if (msg.includes('experience') || msg.includes('work') || msg.includes('intern')) {
+      reply = resumeContext.experience;
+    } else if (msg.includes('project') || msg.includes('build') || msg.includes('made')) {
+      reply = resumeContext.projects;
+    } else if (msg.includes('contact') || msg.includes('email') || msg.includes('phone') || msg.includes('hire')) {
+      reply = resumeContext.contact;
+    } else if (msg.includes('education') || msg.includes('study') || msg.includes('college')) {
+      reply = resumeContext.education;
+    } else if (msg.includes('hi') || msg.includes('hello') || msg.includes('hey')) {
+      reply = "Hello! I'm Keshav's AI Assistant. You can ask me about his skills, experience, or projects!";
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    // Simulate AI typing delay
+    await new Promise(resolve => setTimeout(resolve, 800));
 
-    const prompt = `${resumeContext}\n\nUser Question: ${message}\nAssistant Answer:`;
-    
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-
-    return res.status(200).json({ reply: text });
+    return res.status(200).json({ reply });
 
   } catch (error) {
-    console.error('Chat AI Error:', error);
-    return res.status(500).json({ error: 'Failed to fetch AI response', details: error.message });
+    console.error('Chat Error:', error);
+    return res.status(500).json({ error: 'Server Error' });
   }
 }

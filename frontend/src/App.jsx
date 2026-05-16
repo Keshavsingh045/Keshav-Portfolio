@@ -16,6 +16,9 @@ import {
 import Background3D from './components/Background3D';
 import TiltCard from './components/TiltCard';
 import Chatbot from './components/Chatbot';
+import KnowledgeGraph from './components/KnowledgeGraph';
+import CodeTrailCursor from './components/CodeTrailCursor';
+import GithubHeatmap from './components/GithubHeatmap';
 
 const SectionHeading = ({ title, icon: Icon }) => (
   <motion.div 
@@ -66,6 +69,7 @@ function App() {
       
       {/* 3D Background */}
       <Background3D />
+      <CodeTrailCursor />
 
       {/* Navbar / Header */}
       <nav className="fixed top-0 left-0 right-0 z-50 glass-panel border-x-0 border-t-0 rounded-none px-6 py-4 bg-slate-950/40">
@@ -301,11 +305,12 @@ function App() {
           </div>
         </section>
 
-        {/* SKILLS SECTION */}
-        <section id="skills">
+        <section id="skills" className="space-y-10">
           <SectionHeading title="Technical Arsenal" icon={Terminal} />
           
-          <div className="grid lg:grid-cols-2 gap-10">
+          <KnowledgeGraph />
+          
+          <div className="grid lg:grid-cols-2 gap-10 mt-10">
             <TiltCard>
               <div className="glass-panel p-10 h-full relative overflow-hidden">
                 <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl" />
@@ -366,6 +371,11 @@ function App() {
               </TiltCard>
             </div>
           </div>
+        </section>
+
+        {/* GITHUB ACTIVITY SECTION */}
+        <section id="activity" className="w-full">
+          <GithubHeatmap />
         </section>
 
         {/* EDUCATION & CERTS */}

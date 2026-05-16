@@ -8,14 +8,18 @@ Here is Keshav's data:
 Name: Keshav Kundan
 Title: Full Stack Developer | React, Node.js & Data Analysis
 Location: Samastipur, Bihar
-Email: keshavkskr400@gmail.com
-Phone: +91 8092289667
-Skills: C/C++, JavaScript, React, Node.js, Express, MongoDB, Tailwind CSS, Bootstrap.
-Experience: Web Developer Intern at InternPe (Feb 2024 - Mar 2024) - Built 3 live MERN projects.
+Email: keshavkskr400@gmail.com, rr2533562@gmail.com
+Phone: +91 7672843642, +91 8397027306
+Skills: HTML/CSS, JavaScript, React.js, React Native, Node.js, Express.js, MongoDB, TypeScript, Tailwind CSS, Python, AWS, MySQL, Tableau.
+Experience: 
+1. MERN Stack Intern at Taxmann Technologies Pvt. Ltd. (Feb 2026 - Present) - Built full stack web apps with MongoDB, Express.js, React.js, and Node.js.
+2. Frontend Developer Intern at Hexadecimal Software Pvt.Ltd (Oct 2025 - Apr 2026) - Built responsive web pages using HTML, CSS, JavaScript, and React.
+3. Freelance AI Assistant at Outlier Ai (Feb 2025 - May 2025) - Solved client problems and delivered AI-driven outputs.
 Projects:
-1. AI Exam System: Automates exam paper generation using AI.
-2. Skill Assessment Platform: Platform for evaluating technical skills.
-3. Certificate Validation API: Backend service for validating certificates.
+1. PDF Editor (2025): Full-stack monorepo app with Next.js, Node.js, pdf.js, Gemini API, Groq, MongoDB.
+2. Dashboard Builder (2025): Developed using React, integrated backend APIs to display real-time data in widgets.
+3. Speak Easy Tutor (2026): Web app improving spoken communication skills using React, TypeScript, Tailwind CSS, Vite.
+Education: B.Tech in CSE at IITM Group Of Institutions (2022-2026).
 `;
 
 export default async function handler(req, res) {

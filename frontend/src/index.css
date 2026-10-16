@@ -20,6 +20,19 @@ body {
   @apply bg-slate-950 text-slate-200 font-sans antialiased;
 }
 
+/* Ensure accurate cursor and hit-testing for all interactive elements */
+button, 
+a, 
+input[type="submit"], 
+input[type="button"], 
+[role="button"] {
+  cursor: pointer;
+}
+
+input, textarea, select {
+  cursor: text;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

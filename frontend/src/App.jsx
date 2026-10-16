@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, Phone, Menu, X, 
-  MapPin, ExternalLink, ChevronDown, Award, Briefcase, 
+  Award, Briefcase, 
   Code, GraduationCap, Layout, Server, Sparkles, Terminal,
   Download, Send, CheckCircle2, AlertCircle
 } from 'lucide-react';
@@ -128,30 +128,29 @@ function App() {
         </AnimatePresence>
       </nav>
 
-      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20 space-y-40" style={{ perspective: "1000px" }}>
+      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-20 space-y-40">
         
         {/* HERO SECTION */}
         <section id="about" className="min-h-[85vh] flex flex-col md:flex-row items-center justify-between relative gap-10">
           <motion.div 
-            initial={{ opacity: 0, z: -100, rotateY: -20 }}
-            animate={{ opacity: 1, z: 0, rotateY: 0 }}
-            transition={{ duration: 1.2, type: "spring", bounce: 0.4 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, type: "spring", bounce: 0.3 }}
             className="max-w-3xl flex-1"
-            style={{ transformStyle: "preserve-3d" }}
           >
             <motion.div 
-              whileHover={{ translateZ: 50 }}
+              whileHover={{ scale: 1.03 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 text-sm font-bold mb-8 border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] backdrop-blur-md"
             >
               <Sparkles size={16} />
               <span>MERN Stack Developer</span>
             </motion.div>
             
-            <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter" style={{ transform: "translateZ(30px)" }}>
+            <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter">
               Hi, I'm <br/><span className="text-gradient drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]">{personalDetails.name}</span>
             </h1>
             
-            <p className="text-2xl md:text-3xl text-slate-300 mb-10 leading-relaxed font-light max-w-2xl" style={{ transform: "translateZ(20px)" }}>
+            <p className="text-2xl md:text-3xl text-slate-300 mb-10 leading-relaxed font-light max-w-2xl">
               {personalDetails.title} based in {personalDetails.location}. 
               Crafting immersive, high-performance web experiences.
             </p>
@@ -161,7 +160,7 @@ function App() {
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59,130,246,0.6)" }}
                 whileTap={{ scale: 0.95 }}
                 href="#contact" 
-                className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-blue-600/30 flex items-center gap-2"
+                className="px-8 py-4 bg-blue-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-blue-600/30 flex items-center gap-2 cursor-pointer"
               >
                 Let's Build Something
               </motion.a>
@@ -170,25 +169,40 @@ function App() {
                 whileTap={{ scale: 0.95 }}
                 href="/resume.pdf" 
                 target="_blank"
-                className="px-8 py-4 bg-slate-900 border border-slate-700 text-slate-200 rounded-xl font-bold transition-colors shadow-xl flex items-center gap-2 hover:border-blue-500"
+                className="px-8 py-4 bg-slate-900 border border-slate-700 text-slate-200 rounded-xl font-bold transition-colors shadow-xl flex items-center gap-2 hover:border-blue-500 cursor-pointer"
               >
                 <Download size={20} /> Download CV
               </motion.a>
-              <TiltCard className="inline-block">
-                <a href={personalDetails.socials.github} target="_blank" rel="noreferrer" className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors">
-                  <Github size={22} className="text-blue-400"/> GitHub
-                </a>
-              </TiltCard>
-              <TiltCard className="inline-block">
-                <a href={personalDetails.socials.linkedin} target="_blank" rel="noreferrer" className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors">
-                  <Linkedin size={22} className="text-blue-400"/> LinkedIn
-                </a>
-              </TiltCard>
-              <TiltCard className="inline-block">
-                <a href={`https://chess.com/member/${personalDetails.socials.chess}`} target="_blank" rel="noreferrer" className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors">
-                  <SiChessdotcom size={22} className="text-blue-400"/> Chess.com
-                </a>
-              </TiltCard>
+              <motion.a 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={personalDetails.socials.github} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors cursor-pointer hover:border-blue-500"
+              >
+                <Github size={22} className="text-blue-400"/> GitHub
+              </motion.a>
+              <motion.a 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={personalDetails.socials.linkedin} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors cursor-pointer hover:border-blue-500"
+              >
+                <Linkedin size={22} className="text-blue-400"/> LinkedIn
+              </motion.a>
+              <motion.a 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={`https://chess.com/member/${personalDetails.socials.chess}`} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors cursor-pointer hover:border-blue-500"
+              >
+                <SiChessdotcom size={22} className="text-blue-400"/> Chess.com
+              </motion.a>
             </div>
           </motion.div>
 
@@ -211,7 +225,11 @@ function App() {
                   src="/hero-pic.jpg" 
                   alt="Keshav Kundan" 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/400x500/0f172a/3b82f6?text=Upload+hero-pic.jpg'; }}
+                  onError={(e) => { 
+                    if (!e.target.src.endsWith('hero-pic.jpg.png')) {
+                      e.target.src = '/hero-pic.jpg.png';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
               </div>
@@ -462,7 +480,11 @@ function App() {
                   src="/bw-pic.jpg" 
                   alt="Keshav B&W" 
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300x400/0f172a/3b82f6?text=Upload+bw-pic.jpg'; }}
+                  onError={(e) => { 
+                    if (!e.target.src.endsWith('bw-pic.png')) {
+                      e.target.src = '/bw-pic.png';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
               </div>
@@ -474,7 +496,11 @@ function App() {
                   src="/desk-pic.jpg" 
                   alt="Keshav at Desk" 
                   className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300x400/0f172a/8b5cf6?text=Upload+desk-pic.jpg'; }}
+                  onError={(e) => { 
+                    if (!e.target.src.endsWith('desk-pic.png')) {
+                      e.target.src = '/desk-pic.png';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay group-hover:bg-transparent transition-colors duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
@@ -487,24 +513,27 @@ function App() {
                   src="/moody-pic.jpg" 
                   alt="Keshav Moody" 
                   className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-700"
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/300x400/0f172a/3b82f6?text=Upload+moody-pic.jpg'; }}
+                  onError={(e) => { 
+                    if (!e.target.src.endsWith('moody-pic.png')) {
+                      e.target.src = '/moody-pic.png';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
               </div>
             </TiltCard>
           </div>
 
-          <TiltCard>
-            <div className="glass-panel p-16 text-center relative overflow-hidden border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/0 to-slate-900/0" />
+          <div className="glass-panel p-8 md:p-16 text-center relative overflow-hidden border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/0 to-slate-900/0" />
+            
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tight drop-shadow-xl">Initialize Connection.</h2>
+              <p className="text-slate-300 mb-12 text-xl font-light">
+                Open for new MERN Stack opportunities. Let's create something extraordinary together.
+              </p>
               
-              <div className="relative z-10 max-w-3xl mx-auto" style={{ transform: "translateZ(40px)" }}>
-                <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tight drop-shadow-xl">Initialize Connection.</h2>
-                <p className="text-slate-300 mb-12 text-xl font-light">
-                  Open for new MERN Stack opportunities. Let's create something extraordinary together.
-                </p>
-                
-                <div className="grid md:grid-cols-2 gap-10 mb-14 text-left" style={{ transform: "translateZ(20px)" }}>
+              <div className="grid md:grid-cols-2 gap-10 mb-14 text-left">
                   {/* Contact Info */}
                   <div className="space-y-6">
                     <h3 className="text-2xl font-bold text-white mb-4">Contact Information</h3>
@@ -586,7 +615,7 @@ function App() {
                   </form>
                 </div>
 
-                <div className="flex justify-center gap-6" style={{ transform: "translateZ(30px)" }}>
+                <div className="flex justify-center gap-6">
                   {[
                     { icon: <Github size={24} />, link: personalDetails.socials.github },
                     { icon: <Linkedin size={24} />, link: personalDetails.socials.linkedin },
@@ -608,7 +637,6 @@ function App() {
                 </div>
               </div>
             </div>
-          </TiltCard>
         </section>
 
       </main>

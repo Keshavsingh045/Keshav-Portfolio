@@ -66,7 +66,7 @@ function Particles() {
 
 export default function Background3D() {
   return (
-    <div className="fixed inset-0 z-[-1] bg-slate-950">
+    <div className="fixed inset-0 z-[-1] bg-slate-950 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} color="#3b82f6" />

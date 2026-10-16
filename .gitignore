@@ -1,4 +1,8 @@
 node_modules/
 .env
+.env.*
+messages.json
+backend/messages.json
 dist/
 .DS_Store
+*.log

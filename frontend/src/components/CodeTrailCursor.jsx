@@ -45,14 +45,11 @@ export default function CodeTrailCursor() {
   if (!isDesktop) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-[9999] overflow-hidden">
-      {/* Tiny Core Cursor Dot */}
-      <div className="w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_10px_#3b82f6] fixed top-0 left-0" style={{ transform: 'translate(-50%, -50%)' }}></div>
-      
+    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-[9999] overflow-hidden select-none">
       {particles.map((p) => (
         <div
           key={p.id}
-          className="absolute text-sm font-mono font-bold animate-float-fade"
+          className="absolute text-sm font-mono font-bold animate-float-fade pointer-events-none select-none"
           style={{
             left: p.x,
             top: p.y,

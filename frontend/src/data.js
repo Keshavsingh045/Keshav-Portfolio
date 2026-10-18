@@ -17,9 +17,9 @@ export const personalDetails = {
 
 export const skills = {
   hard: [
-    "HTML/CSS", "JavaScript", "React.js", "React Native", "Node.js", 
-    "Express.js", "MongoDB", "TypeScript", "Tailwind CSS", "Python", 
-    "AWS", "MySQL", "MySQL / JDBC", "Tableau", "Data-Driven Decision Making", "Excel (Advanced)"
+    "HTML/CSS", "JavaScript", "React.js", "React Native", "Node.js",
+    "Express.js", "MongoDB", "TypeScript", "Tailwind CSS",
+    "AWS", "MySQL", "MySQL / JDBC", "Data-Driven Decision Making", "Excel (Advanced)"
   ],
   soft: [
     "Communication", "Critical thinking", "Teamwork", "Problem-Solving", "Adaptability"
@@ -34,7 +34,7 @@ export const experience = [
   {
     role: "MERN Stack Intern",
     company: "Taxmann Technologies Pvt. Ltd.",
-    duration: "Feb 2026 - Present",
+    duration: "Feb 2026 - Aug 2026",
     description: [
       "Built full stack web apps with MongoDB, Express.js, React.js, and Node.js, delivering features.",
       "Created reusable UI components, enhancing user experience and performance.",
@@ -88,9 +88,9 @@ export const projects = [
 export const education = [
   {
     degree: "B.Tech in Computer Science Engineering",
-    institution: "IITM Group Of Institutions / Deenbandhu Chhotu Ram University of Science And Technology",
+    institution: "IITM Group Of Institutions / DCRUST",
     duration: "2022 - 2026",
-    score: "CGPA: 7.2"
+    score: "CGPA: 7.53"
   },
   {
     degree: "Class XII",
@@ -100,7 +100,7 @@ export const education = [
   },
   {
     degree: "Class X",
-    institution: "Public Central School",
+    institution: "Public Central School Samastipur ",
     duration: "2020",
     score: "Percentage: 78.2%"
   }

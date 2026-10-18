@@ -19,6 +19,7 @@ import Chatbot from './components/Chatbot';
 import KnowledgeGraph from './components/KnowledgeGraph';
 import CodeTrailCursor from './components/CodeTrailCursor';
 import GithubHeatmap from './components/GithubHeatmap';
+import WelcomeScreen from './components/WelcomeScreen';
 
 const SectionHeading = ({ title, icon: Icon }) => (
   <motion.div 
@@ -37,6 +38,7 @@ const SectionHeading = ({ title, icon: Icon }) => (
 );
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('');
@@ -67,6 +69,13 @@ function App() {
   return (
     <div className="min-h-screen text-slate-200 font-sans selection:bg-blue-500/40 relative overflow-hidden">
       
+      {/* 3-Second Cinematic Welcome Intro Preloader */}
+      <AnimatePresence mode="wait">
+        {showIntro && (
+          <WelcomeScreen onComplete={() => setShowIntro(false)} />
+        )}
+      </AnimatePresence>
+
       {/* 3D Background */}
       <Background3D />
       <CodeTrailCursor />

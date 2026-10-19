@@ -8,6 +8,7 @@ export default function KnowledgeGraph() {
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [hoverNode, setHoverNode] = useState(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function KnowledgeGraph() {
   // Responsive Canvas Size
   useEffect(() => {
     const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
       if (containerRef.current) {
         setDimensions({
           width: containerRef.current.clientWidth,
@@ -119,6 +121,8 @@ export default function KnowledgeGraph() {
             width={dimensions.width}
             height={dimensions.height}
             graphData={graphData}
+            enableZoomInteraction={!isMobile}
+            enablePanInteraction={!isMobile}
             nodeLabel="name"
             nodeRelSize={6}
             nodeColor={(node) => {

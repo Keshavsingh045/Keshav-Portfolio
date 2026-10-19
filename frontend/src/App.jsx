@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, Phone, Menu, X, 
   Award, Briefcase, 
   Code, GraduationCap, Layout, Server, Sparkles, Terminal,
-  Download, Send, CheckCircle2, AlertCircle
+  Download, Send, CheckCircle2, AlertCircle, ExternalLink,
+  Copy, Check
 } from 'lucide-react';
 import { FiGithub as Github, FiLinkedin as Linkedin, FiTwitter as Twitter, FiInstagram as Instagram } from 'react-icons/fi';
 import { SiChessdotcom } from 'react-icons/si';
@@ -42,6 +43,44 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState('');
+  const [selectedCert, setSelectedCert] = useState(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSelectedCert(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleCopyEmail = async (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    const email = personalDetails.emails[0];
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        throw new Error('Fallback needed');
+      }
+    } catch {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      }
+    }
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
+  };
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
@@ -147,13 +186,25 @@ function App() {
             transition={{ duration: 1, type: "spring", bounce: 0.3 }}
             className="max-w-3xl flex-1"
           >
-            <motion.div 
-              whileHover={{ scale: 1.03 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 text-sm font-bold mb-8 border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] backdrop-blur-md"
-            >
-              <Sparkles size={16} />
-              <span>MERN Stack Developer</span>
-            </motion.div>
+            <div className="flex flex-wrap items-center gap-3 mb-8">
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 text-sm font-bold border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] backdrop-blur-md"
+              >
+                <Sparkles size={16} />
+                <span>MERN Stack Developer</span>
+              </motion.div>
+              <motion.div 
+                whileHover={{ scale: 1.03 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] backdrop-blur-md"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>Available for Opportunities</span>
+              </motion.div>
+            </div>
             
             <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter">
               Hi, I'm <br/><span className="text-gradient drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]">{personalDetails.name}</span>
@@ -205,7 +256,7 @@ function App() {
               <motion.a 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href={`https://chess.com/member/${personalDetails.socials.chess}`} 
+                href={personalDetails.socials.chess} 
                 target="_blank" 
                 rel="noreferrer" 
                 className="px-6 py-4 glass-panel rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800/80 transition-colors cursor-pointer hover:border-blue-500"
@@ -319,12 +370,44 @@ function App() {
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-3 mt-auto relative z-10" style={{ transform: "translateZ(25px)" }}>
+                  <div className="flex flex-wrap gap-3 mt-auto mb-6 relative z-10" style={{ transform: "translateZ(25px)" }}>
                     {project.tech.map((t, i) => (
                       <span key={i} className="px-4 py-2 text-sm font-bold bg-slate-950/80 text-blue-200 rounded-xl border border-blue-900/50 shadow-inner group-hover:border-blue-500/50 transition-colors">
                         {t}
                       </span>
                     ))}
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-6 border-t border-slate-800/80 relative z-10" style={{ transform: "translateZ(30px)" }}>
+                    {project.liveUrl ? (
+                      <motion.a 
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        href={project.liveUrl} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-sm shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
+                      >
+                        <ExternalLink size={16} /> Live Demo
+                      </motion.a>
+                    ) : (
+                      <span className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-slate-900/60 border border-slate-800/80 text-slate-500 font-semibold rounded-xl text-xs">
+                        Demo in Progress
+                      </span>
+                    )}
+
+                    {project.githubUrl && (
+                      <motion.a 
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        href={project.githubUrl} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-bold rounded-xl text-sm border border-slate-700/80 hover:border-slate-500 transition-all cursor-pointer shadow-md"
+                      >
+                        <Github size={16} /> Source Code
+                      </motion.a>
+                    )}
                   </div>
                 </motion.div>
               </TiltCard>
@@ -432,18 +515,16 @@ function App() {
                 <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
                 <div className="space-y-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
                   {certifications.map((cert, idx) => (
-                    <motion.a 
-                      href={cert.image}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <motion.div 
+                      onClick={() => setSelectedCert(cert)}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
                       key={idx} 
-                      className="flex flex-col sm:flex-row gap-6 p-5 bg-slate-900/50 border border-slate-700/50 rounded-2xl hover:border-blue-500/50 hover:bg-slate-800 transition-all group shadow-lg cursor-pointer block"
+                      className="flex flex-col sm:flex-row gap-6 p-5 bg-slate-900/50 border border-slate-700/50 rounded-2xl hover:border-blue-500/50 hover:bg-slate-800 transition-all group shadow-lg cursor-pointer"
                     >
-                      {/* Certificate Image Placeholder */}
+                      {/* Certificate Image Thumbnail */}
                       <div className="w-full sm:w-40 h-28 shrink-0 rounded-xl overflow-hidden bg-slate-950 border border-slate-700 relative">
                         <img 
                           src={cert.image} 
@@ -452,25 +533,30 @@ function App() {
                           onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200/0f172a/3b82f6?text=Upload+Screenshot'; }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                          <span className="text-xs font-bold text-blue-400">View Certificate</span>
+                          <span className="text-xs font-bold text-blue-400 flex items-center gap-1">
+                            <Sparkles size={12} /> Inspect Preview
+                          </span>
                         </div>
                       </div>
                       
                       {/* Certificate Details */}
-                      <div className="flex flex-col justify-center">
+                      <div className="flex flex-col justify-center flex-1">
                         <h4 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors leading-tight">
                           {cert.title}
                         </h4>
-                        <div className="flex flex-wrap gap-4 text-sm font-medium">
+                        <div className="flex flex-wrap items-center gap-4 text-sm font-medium">
                           <span className="flex items-center gap-1 text-slate-300">
                             <Award size={16} className="text-purple-400" /> {cert.issuer}
                           </span>
                           <span className="flex items-center gap-1 text-slate-400 bg-slate-950 px-2 py-0.5 rounded-md">
                             {cert.date}
                           </span>
+                          <span className="text-xs text-blue-400/80 group-hover:text-blue-300 font-semibold ml-auto flex items-center gap-1">
+                            Click to view ↗
+                          </span>
                         </div>
                       </div>
-                    </motion.a>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -546,17 +632,42 @@ function App() {
                   {/* Contact Info */}
                   <div className="space-y-6">
                     <h3 className="text-2xl font-bold text-white mb-4">Contact Information</h3>
-                    <motion.a 
-                      whileHover={{ scale: 1.02, x: 5 }}
-                      href={`mailto:${personalDetails.emails[0]}`} 
-                      className="flex items-center gap-4 p-4 glass-panel rounded-xl hover:border-blue-500/50 transition-all"
-                    >
-                      <div className="p-3 bg-blue-500/20 text-blue-400 rounded-lg"><Mail size={24} /></div>
-                      <div>
-                        <p className="text-sm text-slate-400 font-medium">Email</p>
-                        <p className="text-lg text-slate-200 font-bold">{personalDetails.emails[0]}</p>
-                      </div>
-                    </motion.a>
+                    <div className="flex items-center justify-between p-4 glass-panel rounded-xl hover:border-blue-500/50 transition-all group">
+                      <a 
+                        href={`mailto:${personalDetails.emails[0]}`} 
+                        className="flex items-center gap-4 flex-1 min-w-0"
+                      >
+                        <div className="p-3 bg-blue-500/20 text-blue-400 rounded-lg group-hover:scale-105 transition-transform shrink-0">
+                          <Mail size={24} />
+                        </div>
+                        <div className="truncate">
+                          <p className="text-sm text-slate-400 font-medium">Email</p>
+                          <p className="text-base sm:text-lg text-slate-200 font-bold group-hover:text-blue-300 transition-colors truncate">
+                            {personalDetails.emails[0]}
+                          </p>
+                        </div>
+                      </a>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        type="button"
+                        onClick={handleCopyEmail}
+                        title="Copy Email"
+                        className="p-2.5 bg-slate-900 border border-slate-700/80 hover:border-blue-500 text-slate-300 hover:text-white rounded-xl transition-colors ml-2 shrink-0 cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+                      >
+                        {copiedEmail ? (
+                          <>
+                            <Check size={16} className="text-emerald-400" />
+                            <span className="text-emerald-400 hidden sm:inline">Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy size={16} />
+                            <span className="hidden sm:inline">Copy</span>
+                          </>
+                        )}
+                      </motion.button>
+                    </div>
                     <motion.a 
                       whileHover={{ scale: 1.02, x: 5 }}
                       href={`tel:${personalDetails.phones[0]}`} 
@@ -628,9 +739,9 @@ function App() {
                   {[
                     { icon: <Github size={24} />, link: personalDetails.socials.github },
                     { icon: <Linkedin size={24} />, link: personalDetails.socials.linkedin },
-                    { icon: <Twitter size={24} />, link: `https://twitter.com/${personalDetails.socials.twitter}` },
-                    { icon: <Instagram size={24} />, link: `https://instagram.com/${personalDetails.socials.instagram}` },
-                    { icon: <SiChessdotcom size={24} />, link: `https://chess.com/member/${personalDetails.socials.chess}` }
+                    { icon: <Twitter size={24} />, link: personalDetails.socials.twitter },
+                    { icon: <Instagram size={24} />, link: personalDetails.socials.instagram },
+                    { icon: <SiChessdotcom size={24} />, link: personalDetails.socials.chess }
                   ].map((social, idx) => (
                     <motion.a 
                       key={idx}
@@ -670,6 +781,68 @@ function App() {
           © {new Date().getFullYear()} Keshav Kundan. All Rights Reserved.
         </p>
       </footer>
+
+      {/* Certificate Lightbox Modal */}
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedCert(null)}
+            className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+          >
+            <motion.div 
+              initial={{ scale: 0.92, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.92, y: 20, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-slate-900/95 border border-slate-700/80 rounded-3xl max-w-3xl w-full p-6 shadow-2xl relative overflow-hidden flex flex-col gap-6"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 bg-yellow-500/10 text-yellow-400 rounded-xl border border-yellow-500/20">
+                    <Award size={22} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white leading-tight">{selectedCert.title}</h3>
+                    <p className="text-sm text-slate-400 font-medium">{selectedCert.issuer} • {selectedCert.date}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setSelectedCert(null)}
+                  className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer"
+                  title="Close"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950/70 max-h-[60vh] flex items-center justify-center p-2">
+                <img 
+                  src={selectedCert.image} 
+                  alt={selectedCert.title}
+                  className="w-full h-auto max-h-[56vh] object-contain rounded-lg"
+                />
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-slate-800/60">
+                <span className="text-xs text-slate-400">Press <kbd className="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-300">Esc</kbd> or click outside to dismiss</span>
+                <a 
+                  href={selectedCert.image} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
+                >
+                  <ExternalLink size={16} /> Open Full Resolution
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Chatbot />
     </div>
   );

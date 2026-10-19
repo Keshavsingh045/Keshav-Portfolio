@@ -9,9 +9,9 @@ export const personalDetails = {
   socials: {
     linkedin: "https://www.linkedin.com/in/keshav-kundan-726071252",
     github: "https://github.com/Keshavsingh045",
-    twitter: "singh45keshav",
-    instagram: "keshavsingh045",
-    chess: "keshavsingh045",
+    twitter: "https://x.com/singh45keshav",
+    instagram: "https://instagram.com/keshavsingh045",
+    chess: "https://chess.com/member/keshavsingh045",
   }
 };
 
@@ -69,19 +69,25 @@ export const projects = [
     title: "PDF Editor",
     year: "2025",
     description: "Full-stack monorepo application with separate web (Next.js + shadcn/ui) and API (Node.js + TypeScript) layers. Developed a PDF viewer using pdf.js for in-browser viewing with zoom and navigation support. Integrated Gemini API and Groq for AI-based invoice data extraction and editable form display. Implemented CRUD operations and invoice record management using MongoDB (Atlas). Deployed both web and API apps on Vercel with clean REST endpoints.",
-    tech: ["Next.js", "Node.js", "TypeScript", "MongoDB", "Gemini API", "pdf.js"]
+    tech: ["Next.js", "Node.js", "TypeScript", "MongoDB", "Gemini API", "pdf.js"],
+    liveUrl: "",
+    githubUrl: "https://github.com/Keshavsingh045"
   },
   {
     title: "Dashboard Builder",
     year: "2025",
     description: "Developed a dashboard builder tool using React, enabling dynamic UI components and responsive layouts. Integrated backend APIs to fetch and display real-time data in visual widgets (charts, tables).",
-    tech: ["React.js", "HTML/CSS", "JavaScript", "API Integration", "Web Analytics"]
+    tech: ["React.js", "HTML/CSS", "JavaScript", "API Integration", "Web Analytics"],
+    liveUrl: "",
+    githubUrl: "https://github.com/Keshavsingh045"
   },
   {
     title: "Speak Easy Tutor",
     year: "2026",
     description: "Web app improving spoken communication skills with a responsive design. Created reusable UI components using React, TypeScript, and Tailwind CSS. Used Vite and modern frontend practices to streamline development.",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"]
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    liveUrl: "",
+    githubUrl: "https://github.com/Keshavsingh045"
   }
 ];
 
